@@ -108,6 +108,29 @@
 
   </xsl:template>
 
+  <!-- Template that handles osmp codelists -->
+  <xsl:template mode="mode-iso19139" priority="400" match="*[gn:element/gn:text and $schema='iso19139.osmp']">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="codelists" select="$codelists" required="no"/>
+
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)" />
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', $xpath)"/>
+      <xsl:with-param name="value" select="text()"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="type" select="gn-fn-iso19139:getCodeListType(name())"/>
+      <xsl:with-param name="name" select="gn:element/@ref"/>
+      <xsl:with-param name="editInfo" select="../gn:element"/>
+      <xsl:with-param name="listOfValues"
+                      select="gn-fn-metadata:getCodeListValues($schema, name(), $codelists, .)"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+    </xsl:call-template>
+  </xsl:template>
+
 
   <!-- Visit all XML tree recursively -->
   <xsl:template mode="mode-iso19139.osmp" match="*|@*">

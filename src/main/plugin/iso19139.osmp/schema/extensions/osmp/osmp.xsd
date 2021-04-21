@@ -3,10 +3,14 @@
 	<xs:annotation>
 		<xs:documentation>Schema for Ordnance Survey Internal Metadata Profile v0.1</xs:documentation>
 	</xs:annotation>
-	<xs:import namespace="http://www.isotc211.org/2005/gmd" schemaLocation="https://schemas.isotc211.org/schemas/19139/-/gmd/1.0/gmd.xsd"/>
-	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="https://schemas.isotc211.org/schemas/19139/-/gco/gco.xsd"/>
-	<xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="http://schemas.opengis.net/iso/19139/20070417/srv/1.0/srv.xsd"/>
-	<xs:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<!-- <xs:import namespace="http://www.isotc211.org/2005/gmd" schemaLocation="https://schemas.isotc211.org/schemas/19139/-/gmd/1.0/gmd.xsd"/> -->
+	<xs:import namespace="http://www.isotc211.org/2005/gmd" schemaLocation="../../gmd/gmd.xsd"/>
+	<!-- <xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="https://schemas.isotc211.org/schemas/19139/-/gco/gco.xsd"/> -->
+	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="../../gco/gco.xsd"/>
+	<!-- <xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="http://schemas.opengis.net/iso/19139/20070417/srv/1.0/srv.xsd"/> -->
+	<xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="../../srv/srv.xsd"/>
+	<!-- <xs:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/> -->
+	<xs:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gml.xsd"/>
 	<!-- =========================================================================== -->
 
 	<!-- Define elements for descriptive data quality statement -->
@@ -20,6 +24,7 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+
 	<xs:element name="OS_QualityElement" type="osmp:OS_QualityElement_Type" substitutionGroup="gmd:AbstractDQ_Element"/>
 	<xs:complexType name="OS_QualityElement_Type">
 		<xs:complexContent>
@@ -28,27 +33,8 @@
 	</xs:complexType>
 
 	<!-- Define elements for feature instance count -->
-	<xs:simpleType name="OS_Quality_FeatureInstanceCountSource">
-		<xs:annotation>
-			<xs:documentation>Source of record count</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Estimated"/>
-			<xs:enumeration value="Calculated from operational database"/>
-		</xs:restriction>
-	</xs:simpleType>
 
-	<xs:complexType name="OS_FeatureInfo_Type">
-		<xs:sequence>
-			<xs:element name="featureTypeName" type="gco:ScopedName_PropertyType"/>
-			<xs:element name="featureInstanceCount" type="gco:Integer_PropertyType"/>
-			<xs:element name="featureInstanceCountDate" type="gco:Date_PropertyType"/>
-			<xs:element name="featureInstanceCountSource" type="osmp:OS_Quality_FeatureInstanceCountSource"/>
-		</xs:sequence>
-	</xs:complexType>
-	
 	<xs:element name="OS_FeatureCatalogueDescription" type="osmp:OS_FeatureCatalogueDescription_Type" substitutionGroup="gmd:AbstractMD_ContentInformation"/>
-
 	<xs:complexType name="OS_FeatureCatalogueDescription_Type">
 		<xs:annotation>
 			<xs:documentation>OS extension of ISO 19115:2003 MD_FeatureCatalogueDescription, in line with 19115-1:2014</xs:documentation>
@@ -56,9 +42,31 @@
 		<xs:complexContent>
 			<xs:extension base="gmd:AbstractMD_ContentInformation_Type">
 				<xs:sequence>
-					<xs:element name="featureTypes" type="osmp:OS_FeatureInfo_Type" maxOccurs="unbounded"/>
+					<xs:element name="featureTypes" type="osmp:OS_FeatureInfo_PropertyType" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+
+
+	<xs:complexType name="OS_FeatureInfo_PropertyType">
+		<xs:sequence>
+			<xs:element name="featureTypeName" type="gco:ScopedName_PropertyType"/>
+			<xs:element name="featureInstanceCount" type="gco:Integer_PropertyType"/>
+			<xs:element name="featureInstanceCountDate" type="gco:Date_PropertyType"/>
+			<xs:element name="featureInstanceCountSource">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:documentation>Source of record count</xs:documentation>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Estimated"/>
+						<xs:enumeration value="Calculated from operational database"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
 </xs:schema>

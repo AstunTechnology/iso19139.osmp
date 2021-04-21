@@ -3568,4 +3568,36 @@
 <element name="gmx:ML_CompoundCRS">
   <label>Compound CRS</label>
   </element>
+
+<!-- elements for osmp -->
+<element name="osmp:OS_FeatureCatalogueDescription">
+    <label>OS Feature Catalogue Description</label>
+</element>
+<element name="osmp:featureTypes">
+    <label>Feature Types</label>
+</element>
+<element name="osmp:featureTypeName">
+    <label>Feature Type Name</label>
+</element>
+<element name="osmp:featureInstanceCount">
+    <label>Feature Instance Count</label>
+</element>
+<element name="osmp:featureInstanceCountDate">
+    <label>Feature Instance Count Date</label>
+</element>
+<element name="osmp:featureInstanceCountSource">
+    <label>Feature Instance Count Source</label>
+</element>
+<element name="osmp:OS_QualityElement">
+    <label>OS Quality Element</label>
+</element>
+<element name="osmp:statement" context="osmp:OS_QualitativeResult">
+    <label>OS Quality Element Statement</label>
+</element>
+<element name="osmp:OS_QualitativeResult">
+    <label>OS Qualitative Result</label>
+</element>
+
+
+
   </labels>

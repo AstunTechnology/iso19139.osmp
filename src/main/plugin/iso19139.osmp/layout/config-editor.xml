@@ -3612,6 +3612,11 @@
         <text ref="resourcelocatorsrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
                 </section>
 
+        <section xpath="/gmd:MD_Metadata/gmd:contentInfo" or="contentInfo"
+                 in="/gmd:MD_Metadata"/>
+           <!-- <text ref="dataquality_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+            <text ref="dataqualitysrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/> -->
+
 
         <!-- Start dataQualitySection -->
           <!-- <section name="gmd:dataQualityInfo">

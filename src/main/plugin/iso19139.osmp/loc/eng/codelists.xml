@@ -2354,4 +2354,10 @@
       <entry><code>OGC:WMC</code><label>OGC:WMC</label><description></description></entry>
       <entry><code>OGC:OWS-C</code><label>OGC OWS Context</label><description></description></entry>
     </codelist>
+
+    <!-- osmp featureInstanceCountSource codelist -->
+    <codelist name="osmp:featureInstanceCountSource">
+      <entry><code>Estimated</code><label>Estimated</label><description></description></entry>
+      <entry><code>Calculated from operational database</code><label>Calculated from operational database</label><description></description></entry>
+    </codelist>
   </codelists>
