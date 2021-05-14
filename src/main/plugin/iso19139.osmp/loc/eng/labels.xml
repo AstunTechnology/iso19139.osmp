@@ -3589,10 +3589,10 @@
     <label>Feature Instance Count Source</label>
 </element>
 <element name="osmp:OS_QualityElement">
-    <label>OS Quality Element</label>
+    <label>OS Data Quality Element</label>
 </element>
 <element name="osmp:statement" context="osmp:OS_QualitativeResult">
-    <label>OS Quality Element Statement</label>
+    <label>OS Data Quality Element Statement</label>
 </element>
 <element name="osmp:OS_QualitativeResult">
     <label>OS Qualitative Result</label>
