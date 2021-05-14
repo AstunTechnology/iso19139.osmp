@@ -3687,6 +3687,7 @@
         <for name="gmd:otherConstraints"/>
         <for name="gmd:EX_TemporalExtent"/>
         <for name="gmd:report"/>
+        <for name="gmd:contentInfo"/>
       </flatModeExceptions>
 
       <!--
