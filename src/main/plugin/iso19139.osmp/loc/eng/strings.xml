@@ -876,5 +876,10 @@
 <distributionFormat>Add Distribution Format</distributionFormat>
 <parentidentifier>Parent Identifier</parentidentifier>
 <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd">Metadata</gmd:MD_Metadata>
+<featureTypes>Add OS Feature Type</featureTypes>
+<gmd:scope xmlns:gmd="http://www.isotc211.org/2005/gmd">Quality Scope</gmd:scope>
+<OS_QualityElement>OS Data Quality Element</OS_QualityElement>
+<gmd:report xmlns:gmd="http://www.isotc211.org/2005/gmd">Conformity</gmd:report>
+<conformity>Conformity</conformity>
 
 </strings>

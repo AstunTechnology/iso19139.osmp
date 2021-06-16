@@ -2356,7 +2356,7 @@
     </codelist>
 
     <!-- osmp featureInstanceCountSource codelist -->
-    <codelist name="osmp:featureInstanceCountSource">
+    <codelist name="featureInstanceCountSource">
       <entry><code>Estimated</code><label>Estimated</label><description></description></entry>
       <entry><code>Calculated from operational database</code><label>Calculated from operational database</label><description></description></entry>
     </codelist>

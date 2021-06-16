@@ -3340,7 +3340,7 @@
   <!-- ==================================================== -->
   <element name="hidden-elements">
     <label>Hidden Elements</label>
-    <description>Child elements and attributes have been hidden because you do no have access to
+    <description>Child elements and attributes have been hidden because you do not have access to
       view those elements
     </description>
   </element>
@@ -3585,9 +3585,6 @@
 <element name="osmp:featureInstanceCountDate">
     <label>Feature Instance Count Date</label>
 </element>
-<element name="osmp:featureInstanceCountSource">
-    <label>Feature Instance Count Source</label>
-</element>
 <element name="osmp:OS_QualityElement">
     <label>OS Data Quality Element</label>
 </element>
@@ -3596,6 +3593,17 @@
 </element>
 <element name="osmp:OS_QualitativeResult">
     <label>OS Qualitative Result</label>
+</element>
+
+<element name="osmp:featureInstanceCountSource" context="osmp:featureTypes">
+  <label>Feature Instance Count Source</label>
+  <description>Source of the instance count</description>
+  <help>Source of the instance count</help>
+  <condition>mandatory</condition>
+  <helper>
+    <option value="Estimated">Estimated</option>
+    <option value="Calculated">Calculated from operational database</option>
+  </helper>
 </element>
 
 
