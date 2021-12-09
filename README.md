@@ -18,7 +18,7 @@ Ordnance Survey Metadata Profile
 
 ### Adding the plugin to the source code prior to compiling GeoNetwork
 
-The best approach is to add the plugin as a submodule. Use https://github.com/geonetwork/core-geonetwork/blob/3.10.x/add-schema.sh for automatic deployment:
+The best approach is to add the plugin as a submodule. Use https://github.com/geonetwork/core-geonetwork/blob/3.10.x/add-schema.sh for automatic deployment (change to use the correct branch):
 
 ```
 .\add-schema.sh iso19139.osmp http://github.com/metadata101/iso19139.osmp 3.10.x
