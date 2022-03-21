@@ -180,9 +180,9 @@
     </for>
     <for name="gmd:report" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
-        data-template-add-action="false"
+        data-template-add-action="true"
         data-search-action="true"
-        data-popup-action="false"
+        data-popup-action="true"
         data-filter='{"_root": "gmd:DQ_*"}'
         data-insert-modes=""
         data-template-type="report"/>
@@ -217,15 +217,8 @@
                                           //gmd:thesaurusName/*/gmd:identifier/*/
                                             gmd:code/gmx:Anchor/
                                               concat('-', substring-after(text()[. != ''], 'geonetwork.thesaurus.')), ',')"/>
+      <directiveAttributes data-transformation="to-iso19139-keyword-with-anchor" />
     </for>
-
-    <!-- defining the type of field for the extended osmp elements -->
-    <for name="osmp:featureTypeName" use="textarea"/>
-    <for name="osmp:featureInstanceCount" use="number"/>
-    <for name="osmp:featureInstanceCountDate" use="data-gn-date-picker"/>
-    <for name="osmp:featureInstanceCountSource" use="textarea"/>
-    <for name="osmp:statement" use="textarea"/>
-
   </fields>
 
 
@@ -277,10 +270,10 @@
     <name>gmd:geographicIdentifier</name>
     <name>srv:serviceType</name>
     <name>gmd:report</name>
-    <name>gmd:result</name>
-    <name>osmp:featureTypes</name>
-    <name>osmp:OS_QualityElement</name>
-    
+    <!-- <name>gmd:onLine</name> -->
+    <!-- <name>gmd:CI_OnlineResource</name> -->
+<!--     <name>gmd:specification</name> -->
+<!--     <name>gmd:dataQualityInfo</name> -->
   </fieldsWithFieldset>
 
   <multilingualFields>
@@ -3620,23 +3613,18 @@
         <text ref="resourcelocatorsrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
                 </section>
 
-        <section name="gmd:contentInfo">
-          <field xpath="/gmd:MD_Metadata/gmd:contentInfo/osmp:OS_FeatureCatalogueDescription/osmp:featureTypes" del="."/>
-        <action type="add" name="addOSMPfeatureTypes" or="featureTypes" btnLabel="featureTypes"
-                  in="/gmd:MD_Metadata/gmd:contentInfo/osmp:OS_FeatureCatalogueDescription">
-            <template>
-              <snippet>
-                <osmp:featureTypes>
-                <osmp:featureTypeName><gco:ScopedName codeSpace="http://os.uk"></gco:ScopedName></osmp:featureTypeName>
-                <osmp:featureInstanceCount><gco:Integer></gco:Integer></osmp:featureInstanceCount>
-                <osmp:featureInstanceCountDate><gco:Date></gco:Date></osmp:featureInstanceCountDate>
-                <osmp:featureInstanceCountSource><gco:CharacterString></gco:CharacterString></osmp:featureInstanceCountSource>
-            </osmp:featureTypes>
-              </snippet>
-            </template>
-          </action>
-        </section>
-           
+        <section xpath="/gmd:MD_Metadata/gmd:contentInfo" or="contentInfo"
+                 in="/gmd:MD_Metadata"/>
+           <!-- <text ref="dataquality_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+            <text ref="dataqualitysrv_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/> -->
+
+
+        <!-- Start dataQualitySection -->
+          <!-- <section name="gmd:dataQualityInfo">
+            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope"/>
+            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report"/>
+            <field xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage"/>
+          </section> -->
           <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
                  in="/gmd:MD_Metadata"/>
            <text ref="dataquality_help" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
@@ -3700,8 +3688,6 @@
         <for name="gmd:otherConstraints"/>
         <for name="gmd:EX_TemporalExtent"/>
         <for name="gmd:report"/>
-        <for name="osmp:featureTypes"/>
-        <for name="osmp:OS_QualityElement"/>
       </flatModeExceptions>
 
       <!--
@@ -3722,6 +3708,12 @@
       <thesaurusList>
         <thesaurus key="external.none.allThesaurus"
                    fieldset="false"/>
+        <thesaurus key="external.theme.external.theme.NGD-theme-feature-hierarchy-2022-02-15"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.httpinspireeceuropaeutheme-theme"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
 
     </view>
