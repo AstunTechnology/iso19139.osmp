@@ -4,9 +4,9 @@ Ordnance Survey Metadata Profile
 
 ## GeoNetwork versions to use with this plugin
 
-**Use the correct branch for your version of GeoNetwork. The default branch is for GeoNetwork 3.10 and this is the recommended version.**
+**Use the correct branch for your version of GeoNetwork. This is for GeoNetwork 4.2.**
 
-## Installing the plugin in GeoNetwork 3.10.x (recommended version)
+## Installing the plugin in GeoNetwork 4.2.x
 
 ### Adding to an existing installation
 
@@ -18,10 +18,10 @@ Ordnance Survey Metadata Profile
 
 ### Adding the plugin to the source code prior to compiling GeoNetwork
 
-The best approach is to add the plugin as a submodule. Use https://github.com/geonetwork/core-geonetwork/blob/3.10.x/add-schema.sh for automatic deployment (change to use the correct branch):
+The best approach is to add the plugin as a submodule. Use https://github.com/geonetwork/core-geonetwork/blob/main/add-schema.sh for automatic deployment (change to use the correct branch):
 
 ```
-.\add-schema.sh iso19139.osmp http://github.com/metadata101/iso19139.osmp 3.10.x
+./add-schema.sh iso19139.osmp http://github.com/astuntechnology/iso19139.osmp 4.2.x
 ```
 
 #### Building the application 
