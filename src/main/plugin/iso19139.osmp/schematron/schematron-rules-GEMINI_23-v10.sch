@@ -261,35 +261,53 @@
         extent shall be implemented using gml:TimePeriod or gml:TimeInstant. </sch:assert>
     </sch:rule>
   </sch:pattern>
-  <sch:pattern fpi="Gemini2-mi7-endpos">
+  <sch:pattern fpi="Gemini2-mi7-endpos-a">
     <sch:rule
       context="
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:endPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:endPosition">
-      <sch:report
-        test="((@indeterminatePosition = 'unknown' or @indeterminatePosition = 'now') and normalize-space(.))"
-        > MI-7b (Temporal Extent): When indeterminatePosition='unknown' or indeterminatePosition='now' are specified
-        endPosition should be empty </sch:report>
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition">
       <sch:assert
-        test="string-length() = 0 or string-length() = 4 or string-length() = 7 or string-length() = 10 or string-length() = 19"
-        > MI-7c (Temporal Extent): Date string doesn't have correct length, check it conforms to Gregorian calendar
+        test="not((@indeterminatePosition = 'unknown' or @indeterminatePosition = 'now') and normalize-space(.))"
+        > MI-7b (Temporal Extent): When indeterminatePosition='unknown' or indeterminatePosition='now' are specified
+        endPosition should be empty </sch:assert>
+        </sch:rule>
+  </sch:pattern>
+  <sch:pattern fpi="Gemini2-mi7-endpos-b">
+    <sch:rule
+      context="
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:endPosition">
+      <sch:assert
+        test="string-length(normalize-space(.)) = 0 or string-length(normalize-space(.)) = 4 or string-length(normalize-space(.)) = 7 or string-length(normalize-space(.)) = 10 or string-length(normalize-space(.)) = 19"
+        > MI-7c (Temporal Extent): End Position date string doesn't have correct length, check it conforms to Gregorian calendar
         and UTC as per ISO 8601 </sch:assert>
     </sch:rule>
   </sch:pattern>
-  <sch:pattern fpi="Gemini2-mi7-begpos">
+  <sch:pattern fpi="Gemini2-mi7-begpos-a">
     <sch:rule
       context="
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:beginPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition |
-        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod/gml:beginPosition">
-      <sch:report test="(@indeterminatePosition = 'unknown' and normalize-space(.))"> MI-7d (Temporal Extent): When
-        indeterminatePosition='unknown' is specified beginPosition should be empty </sch:report>
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition">
+      <sch:assert test="not(@indeterminatePosition = 'unknown' and normalize-space(.))"> MI-7d (Temporal Extent): When
+        indeterminatePosition='unknown' is specified beginPosition should be empty </sch:assert>
+         </sch:rule>
+  </sch:pattern>
+  <sch:pattern fpi="Gemini2-mi7-begpos-b">
+    <sch:rule
+      context="
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition |
+        //gmd:MD_Metadata[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType = 'gmd:EX_TemporalExtent'][1]/gmd:extent/gml:TimePeriod//gml:beginPosition">
       <sch:assert
-        test="string-length() = 0 or string-length() = 4 or string-length() = 7 or string-length() = 10 or string-length() = 19"
-        > MI-7e (Temporal Extent): Date string doesn't have correct length, check it conforms to Gregorian calendar
+        test="string-length(normalize-space(.)) = 0 or string-length(normalize-space(.)) = 4 or string-length(normalize-space(.)) = 7 or string-length(normalize-space(.)) = 10 or string-length(normalize-space(.)) = 19"
+        > MI-7e (Temporal Extent): Begin Position date string doesn't have correct length, check it conforms to Gregorian calendar
         and UTC as per ISO 8601 </sch:assert>
     </sch:rule>
   </sch:pattern>
