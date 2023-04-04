@@ -35,20 +35,16 @@
    <!-- conformity directory entries -->
 
     <xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">
-    <xsl:variable name="date"
-                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/>
     <Field name="_title"
-           string="{gmd:result/*/gmd:explanation/gco:CharacterString}{if ($date != '') then concat(' (', $date, ')') else ''}"
+           string="{if ($title != '') then $title else gmd:result/*/gmd:explanation/gco:CharacterString}"
            store="true" index="true"/>
 
         <xsl:call-template name="subtemplate-common-fields"/>
     </xsl:template>
 
     <xsl:template mode="index" match="gmd:DQ_CompletenessCommission[count(ancestor::node()) =  1]">
-    <xsl:variable name="date"
-                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/>
     <Field name="_title"
-           string="{gmd:result/*/gmd:explanation/gco:CharacterString/text()}{if ($date != '') then concat(' (', $date, ')') else ''}"
+           string="{if ($title != '') then $title else gmd:result/*/gmd:explanation/gco:CharacterString/text()}"
            store="true" index="true"/>
 
         <xsl:call-template name="subtemplate-common-fields"/>
@@ -56,11 +52,9 @@
 
     <!-- use constraints directory entries -->
 
-    <xsl:template mode="index" match="gmd:resourceConstraints[*/gmd:useConstraints]">
-    <!-- <xsl:variable name="date"
-                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/> -->
+    <xsl:template mode="index" match="gmd:MD_LegalConstraints[count(ancestor::node()) =  1][gmd:useConstraints]">
     <Field name="_title"
-           string="{gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/text()}"
+           string="{if ($title !='') then $title else concat('Use Constraint: ',//gmd:otherConstraints/gmx:Anchor)}"
            store="true" index="true"/>
 
         <xsl:call-template name="subtemplate-common-fields"/>
@@ -69,11 +63,9 @@
 
     <!-- access constraints directory entries -->
 
-     <xsl:template mode="index" match="gmd:resourceConstraints[*/gmd:accessConstraints]">
-    <!-- <xsl:variable name="date"
-                  select="*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"/> -->
+    <xsl:template mode="index" match="gmd:MD_LegalConstraints[count(ancestor::node()) =  1][gmd:accessConstraints]">
     <Field name="_title"
-           string="{gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/text()}"
+           string="{if ($title !='') then $title else concat('Access Limitation: ',//gmd:otherConstraints/gmx:Anchor)}"
            store="true" index="true"/>
 
         <xsl:call-template name="subtemplate-common-fields"/>
