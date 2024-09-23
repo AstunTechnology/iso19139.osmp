@@ -64,8 +64,7 @@
   </xsl:template>
 
   <!-- remove empty gco:CharacterString child nodes that have been added by inflate-metadata -->
-
-<!-- <xsl:template match="//*[@gco:nilReason]/gco:CharacterString">
+  <!-- <xsl:template match="//*[@gco:nilReason]/gco:CharacterString">
         <xsl:choose>
             <xsl:when test="not(text())">
                 <xsl:message>Empty</xsl:message>
@@ -80,7 +79,7 @@
     </xsl:template> -->
 
     <!--  Delete empty keyword elements  -->
-  <!-- <xsl:template match="//gmd:descriptiveKeywords[./gmd:MD_Keywords/gmd:keyword/@gco:nilReason='missing']">
+    <!-- <xsl:template match="//gmd:descriptiveKeywords[./gmd:MD_Keywords/gmd:keyword/@gco:nilReason='missing']">
     <xsl:message>==== Removing empty keyword element ====</xsl:message>
   </xsl:template> -->
 
@@ -128,13 +127,10 @@
 
     <!-- Retrieve the translation for the codeListValue attribute -->
     <xsl:variable name="codelistTranslation"
-                  select="tr:codelist-value-label(
-                            tr:create('iso19139.osmp'),
-                            local-name(), @codeListValue)"/>
+                  select="tr:codelist-value-label(tr:create('iso19139.osmp'),local-name(), @codeListValue)"/>
 
     <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
-
       <xsl:value-of select="$codelistTranslation" />
     </gmd:LanguageCode>
   </xsl:template>
@@ -172,82 +168,109 @@
   </xsl:template>
 
 
-    <!-- Insert resource id if it does not exist -->
+  <!-- Insert resource id if it does not exist -->
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" >
 
-    <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" >
+    <xsl:copy>
+      <xsl:apply-templates select="gmd:title|gmd:alternateTitle|gmd:date|gmd:date|gmd:edition|gmd:editionDate"/>
 
-        <xsl:copy>
-            <xsl:apply-templates select="gmd:title|gmd:alternateTitle|gmd:date|gmd:date|gmd:edition|gmd:editionDate"/>
+      <xsl:choose>
+        <xsl:when test="not(gmd:identifier)">
+          <xsl:message>==== Add missing resource identifier ====</xsl:message>
+          <gmd:identifier>
+              <gmd:RS_Identifier>
+                  <gmd:code>
+                      <gco:CharacterString><xsl:value-of select="/root/env/uuid"/>_resource</gco:CharacterString>
+                  </gmd:code>
+              </gmd:RS_Identifier>
+          </gmd:identifier>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="gmd:identifier"/>
+        </xsl:otherwise>
+      </xsl:choose>
 
-            <xsl:choose>
-                <xsl:when test="not(gmd:identifier)">
-                    <xsl:message>==== Add missing resource identifier ====</xsl:message>
-                    <gmd:identifier>
-                        <gmd:RS_Identifier>
-                            <gmd:code>
-                                <gco:CharacterString><xsl:value-of select="/root/env/uuid"/>_resource</gco:CharacterString>
-                            </gmd:code>
-                        </gmd:RS_Identifier>
-                    </gmd:identifier>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="gmd:identifier"/>
-                </xsl:otherwise>
-            </xsl:choose>
+      <xsl:apply-templates select="gmd:citedResponsibleParty|gmd:presentationForm|gmd:series|gmd:otherCitationDetails|gmd:collectiveTitle|gmd:ISBN|gmd:ISSN"/>
 
-            <xsl:apply-templates select="gmd:citedResponsibleParty|gmd:presentationForm|gmd:series|gmd:otherCitationDetails|gmd:collectiveTitle|gmd:ISBN|gmd:ISSN"/>
+    </xsl:copy>
+  </xsl:template>
 
-        </xsl:copy>
-    </xsl:template>
-
-    <!-- ================================================================= -->
-    <!-- Insert character encoding as utf8 if it does not exist -->
-
-    <xsl:template match="gmd:identificationInfo/*/gmd:characterSet" >
-      <xsl:copy>
+  <!-- ================================================================= -->
+  <!-- Insert character encoding as utf8 if it does not exist -->
+  <xsl:template match="gmd:identificationInfo/*/gmd:characterSet" >
+    <xsl:copy>
       <xsl:choose>
         <xsl:when test="not(gmd:MD_CharacterSetCode/@codeListValue='utf8')">
-        <xsl:message>==== Add missing encoding ====</xsl:message>
+          <xsl:message>==== Add missing encoding ====</xsl:message>
             <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
-                                     codeListValue="utf8"/>
+                                      codeListValue="utf8"/>
         </xsl:when>
+
         <xsl:otherwise>
           <xsl:message>==== Copying existing encoding ====</xsl:message>
           <xsl:apply-templates select="gmd:MD_CharacterSetCode"/>
         </xsl:otherwise>
-        </xsl:choose>
-      </xsl:copy>
-    </xsl:template>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
 
-    <!-- =============================================================== -->
-    <!-- Overwrite ISO19139 template for dealing with uuidref in srv:OperationsOn -->
-    <xsl:template match="srv:operatesOn" priority="10">
-        <xsl:copy>
-          <xsl:copy-of select="@uuidref"/>
+  <!-- =============================================================== -->
+  <!-- Overwrite ISO19139 template for dealing with uuidref in srv:OperationsOn -->
+  <xsl:template match="srv:operatesOn" priority="10">
+    <xsl:copy>
+      <xsl:copy-of select="@uuidref"/>
+      <xsl:choose>
+
+        <!-- Do not expand operatesOn sub-elements when using uuidref
+              to link service metadata to datasets or datasets to iso19110.
+          -->
+        <xsl:when test="@uuidref">
           <xsl:choose>
-
-            <!-- Do not expand operatesOn sub-elements when using uuidref
-                 to link service metadata to datasets or datasets to iso19110.
-             -->
-            <xsl:when test="@uuidref">
-              <xsl:choose>
-                <xsl:when test="not(string(@xlink:href)) or starts-with(@xlink:href, $serviceUrl)">
-                  <xsl:attribute name="xlink:href">
-                    <xsl:value-of
-                      select="concat($serviceUrl,'csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',@uuidref)"/>
-                  </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="@xlink:href"/>
-                </xsl:otherwise>
-              </xsl:choose>
+            <xsl:when test="not(string(@xlink:href)) or starts-with(@xlink:href, $serviceUrl)">
+              <xsl:attribute name="xlink:href">
+                <xsl:value-of
+                  select="concat($serviceUrl,'csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',@uuidref)"/>
+              </xsl:attribute>
             </xsl:when>
 
             <xsl:otherwise>
-              <xsl:apply-templates select="@*|node()" />
+              <xsl:copy-of select="@xlink:href"/>
             </xsl:otherwise>
           </xsl:choose>
-        </xsl:copy>
-      </xsl:template>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:apply-templates select="@*|node()" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- =============================================================== -->
+  <!-- Limit gmd:dateStamp to full seconds only, stripping out milliseconds and timezone -->
+  <xsl:template match="gmd:dateStamp">
+    <xsl:variable name="datestamp" select="./gco:DateTime"/>
+    <xsl:choose>
+      <!-- Check if the date is in the wrong YYYY-MM-DDTHH:MM:SS.sssZ format -->
+      <xsl:when test="contains($datestamp, '.') and substring($datestamp, string-length($datestamp), 1) = 'Z'">
+        <xsl:message>==== Changing the date format to YYYY-MM-DDTHH:MM:SS ====</xsl:message>
+        <gmd:dateStamp>
+          <gco:DateTime>
+            <xsl:value-of select="concat(substring($datestamp, 1, 10), 'T', substring($datestamp, 12, 8))"/>
+          </gco:DateTime>
+        </gmd:dateStamp>
+      </xsl:when>
+
+      <!-- If the date does not match the problematic format, output the original value -->
+      <xsl:otherwise>
+        <xsl:message>==== Preserving date format ====</xsl:message>
+        <gmd:dateStamp>
+          <gco:DateTime>
+            <xsl:value-of select="$datestamp"/>
+          </gco:DateTime>
+        </gmd:dateStamp>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>
