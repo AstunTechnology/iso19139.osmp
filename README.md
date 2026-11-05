@@ -26,6 +26,6 @@ The best approach is to add the plugin as a submodule. Use https://github.com/ge
 
 #### Building the application
 
-See https://geonetwork-opensource.org/manuals/trunk/en/maintainer-guide/installing/installing-from-source-code.html.
+See [https://geonetwork-opensource.org/manuals/trunk/en/maintainer-guide/installing/installing-from-source-code.html](https://docs.geonetwork-opensource.org/4.4/install-guide/installing-from-source-code/).
 
 Once the application is built `web/target/geonetwork.war` will contain GeoNetwork with the OSMP schema plugin included.
