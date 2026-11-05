@@ -10,9 +10,9 @@ Ordnance Survey Metadata Profile
 
 ### Adding to an existing installation
 
- * Download or clone this repository, ensuring you choose the correct branch. 
+ * Download or clone this repository, ensuring you choose the correct branch.
  * Copy `src/main/plugin/iso19139.osmp` to `INSTALL_DIR/geonetwork/WEB_INF/data/config/schema_plugins/iso19139.osmp` in your installation.
- * Copy `target/schema-iso19139.osmp-3.7.jar` to `INSTALL_DIR/geonetwork/WEB_INF/lib`
+ * Copy `target/schema-iso19139.osmp-4.2.4-SNAPSHOT.jar` to `INSTALL_DIR/geonetwork/WEB_INF/lib`
  * Restart GeoNetwork
  * Check that the schema is registered by visiting Admin Console -> Metadata and Templates -> Standards in GeoNetwork. If you do not see iso19139.osmp then it is not correctly deployed. Check your GeoNetwork log files for errors.
 
@@ -24,8 +24,8 @@ The best approach is to add the plugin as a submodule. Use https://github.com/ge
 ./add-schema.sh iso19139.osmp http://github.com/astuntechnology/iso19139.osmp 4.2.x
 ```
 
-#### Building the application 
+#### Building the application
 
-See https://geonetwork-opensource.org/manuals/trunk/en/maintainer-guide/installing/installing-from-source-code.html. 
+See [https://docs.geonetwork-opensource.org/4.2/install-guide/installing-from-source-code/](https://docs.geonetwork-opensource.org/4.2/install-guide/installing-from-source-code/).
 
 Once the application is built `web/target/geonetwork.war` will contain GeoNetwork with the OSMP schema plugin included.
